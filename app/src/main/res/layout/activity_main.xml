@@ -23,6 +23,25 @@
                 android:background="#4DD0E1"
                 app:title="Trang chính">
 
+                <FrameLayout
+                    android:id="@+id/framegiohang"
+                    android:layout_width="70dp"
+                    android:layout_height="?attr/actionBarSize"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="10dp">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_cart_24" />
+
+                    <com.nex3z.notificationbadge.NotificationBadge
+                        android:id="@+id/menu_sl"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_gravity="top|end" />
+                </FrameLayout>
             </androidx.appcompat.widget.Toolbar>
 
             <ViewFlipper

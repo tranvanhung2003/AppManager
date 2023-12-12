@@ -14,6 +14,8 @@ import com.example.appbanthuoc.R;
 import com.example.appbanthuoc.adapter.GioHangAdapter;
 import com.example.appbanthuoc.utils.Utils;
 
+import java.text.DecimalFormat;
+
 public class GioHangActivity extends AppCompatActivity {
     TextView giohangtrong, tongtien;
     Toolbar toolbar;
@@ -27,6 +29,16 @@ public class GioHangActivity extends AppCompatActivity {
         setContentView(R.layout.activity_gio_hang);
         initView();
         initControl();
+        tinhTongTien();
+    }
+
+    private void tinhTongTien() {
+        long tongtiensp = 0;
+        for (int i = 0; i < Utils.manggiohang.size(); ++i) {
+            tongtiensp = tongtiensp + (Utils.manggiohang.get(i).getGiasp() * Utils.manggiohang.get(i).getSoluong());
+        }
+        DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
+        tongtien.setText(decimalFormat.format(tongtiensp) + "");
     }
 
     private void initControl() {
