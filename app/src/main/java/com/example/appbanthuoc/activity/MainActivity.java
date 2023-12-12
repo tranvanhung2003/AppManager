@@ -143,9 +143,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void ActionViewFlipper() {
         List<String> mangquangcao = new ArrayList<>();
-        mangquangcao.add("https://mauweb.monamedia.net/thegioididong/wp-content/uploads/2017/12/banner-Le-hoi-phu-kien-800-300.png");
-        mangquangcao.add("https://mauweb.monamedia.net/thegioididong/wp-content/uploads/2017/12/banner-HC-Tra-Gop-800-300.png");
-        mangquangcao.add("https://mauweb.monamedia.net/thegioididong/wp-content/uploads/2017/12/banner-big-ky-nguyen-800-300.jpg");
+        mangquangcao.add("https://as2.ftcdn.net/v2/jpg/02/38/70/67/1000_F_238706716_aKnllr4AbeSc0wXX7YnwCjYx3K2MvbFL.jpg");
+        mangquangcao.add("https://as1.ftcdn.net/v2/jpg/02/65/59/54/1000_F_265595483_jNQZb7VNm24iyTPVHqk7rxzKhqyyVGL4.jpg");
+        mangquangcao.add("https://as1.ftcdn.net/v2/jpg/01/83/17/68/1000_F_183176882_Oy5v3GeIxx0YHbOBla7dbj1UrsNo3COI.jpg");
+        mangquangcao.add("https://as2.ftcdn.net/v2/jpg/03/20/95/69/1000_F_320956905_kzzVPPtH1rt0VWNFQOOVmG4sPAvyqtMQ.jpg");
+        mangquangcao.add("https://as1.ftcdn.net/v2/jpg/03/32/98/32/1000_F_332983252_aMO7sK9zWmwO0kmV1QLvEqCSOyUF2qpS.jpg");
+        mangquangcao.add("https://as1.ftcdn.net/v2/jpg/02/38/24/64/1000_F_238246479_mBox8Xekrcrk6z9Iqc6wuTQgwfJP1BDe.jpg");
+        mangquangcao.add("https://as1.ftcdn.net/v2/jpg/02/38/24/64/1000_F_238246479_mBox8Xekrcrk6z9Iqc6wuTQgwfJP1BDe.jpg");
         for (int i = 0; i < mangquangcao.size(); ++i) {
             ImageView imageView = new ImageView(getApplicationContext());
             Glide.with(getApplicationContext()).load(mangquangcao.get(i)).into(imageView);

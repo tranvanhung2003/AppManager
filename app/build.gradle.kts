@@ -54,4 +54,7 @@ dependencies {
 
     // EventBus
     implementation("org.greenrobot:eventbus:3.3.1")
+
+    // Paper
+    implementation("io.github.pilgr:paperdb:2.7.2")
 }
