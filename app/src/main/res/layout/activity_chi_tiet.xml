@@ -15,6 +15,7 @@
         app:title="Chi tiết sản phẩm">
 
         <FrameLayout
+            android:id="@+id/framegiohang"
             android:layout_width="70dp"
             android:layout_height="?attr/actionBarSize"
             android:layout_gravity="end"
