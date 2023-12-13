@@ -83,21 +83,13 @@ public class MainActivity extends AppCompatActivity {
         listViewManHinhChinh.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    case 0:
-                        Intent trangchu = new Intent(getApplicationContext(), MainActivity.class);
-                        startActivity(trangchu);
-                        break;
-                    case 1:
-                        Intent thuoc = new Intent(getApplicationContext(), ThuocActivity.class);
-                        thuoc.putExtra("loai", 1);
-                        startActivity(thuoc);
-                        break;
-                    case 2:
-                        Intent tpcn = new Intent(getApplicationContext(), ThuocActivity.class);
-                        tpcn.putExtra("loai", 2);
-                        startActivity(tpcn);
-                        break;
+                if (position == 0) {
+                    Intent trangchu = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(trangchu);
+                } else {
+                    Intent thuoc = new Intent(getApplicationContext(), ThuocActivity.class);
+                    thuoc.putExtra("loai", position);
+                    startActivity(thuoc);
                 }
             }
         });
