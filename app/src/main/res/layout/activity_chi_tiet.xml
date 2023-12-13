@@ -18,8 +18,7 @@
             android:id="@+id/framegiohang"
             android:layout_width="70dp"
             android:layout_height="?attr/actionBarSize"
-            android:layout_gravity="end"
-            android:layout_marginEnd="10dp">
+            android:layout_gravity="end">
 
             <ImageView
                 android:layout_width="40dp"
@@ -39,19 +38,20 @@
         android:id="@+id/layout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_margin="10dp"
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
 
         <ImageView
             android:id="@+id/imgchitiet"
             android:layout_width="150dp"
-            android:layout_height="200dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
             android:src="@drawable/iconnew_w512" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:orientation="vertical">
 
@@ -59,12 +59,8 @@
                 android:id="@+id/txttensp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:maxLines="2"
-                android:minLines="2"
                 android:text="Tên sản phẩm"
-                android:textSize="20sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -83,9 +79,9 @@
                 android:id="@+id/spinner"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginEnd="20dp"
+                android:layout_marginEnd="10dp"
                 android:background="@drawable/spinner"
                 android:gravity="center" />
 
@@ -107,7 +103,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layout1">
@@ -115,8 +111,10 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="5dp"
             android:text="Mô tả chi tiết sản phẩm"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -129,8 +127,10 @@
                 android:id="@+id/txtmotachitiet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp" />
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="5dp" />
         </ScrollView>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

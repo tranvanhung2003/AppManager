@@ -27,8 +27,7 @@
                     android:id="@+id/framegiohang"
                     android:layout_width="70dp"
                     android:layout_height="?attr/actionBarSize"
-                    android:layout_gravity="end"
-                    android:layout_marginEnd="10dp">
+                    android:layout_gravity="end">
 
                     <ImageView
                         android:layout_width="40dp"
@@ -54,7 +53,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#4DD0E1"
+                android:background="#E8EAF6"
                 android:orientation="vertical">
 
                 <TextView
@@ -63,7 +62,6 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
                     android:text="Sản phẩm mới nhất"
-                    android:textColor="@android:color/holo_red_light"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -71,8 +69,9 @@
                     android:id="@+id/recycleview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp">
 
                 </androidx.recyclerview.widget.RecyclerView>

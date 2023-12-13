@@ -1,5 +1,6 @@
 package com.example.appbanthuoc.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -65,6 +66,14 @@ public class GioHangActivity extends AppCompatActivity {
             adapter = new GioHangAdapter(getApplicationContext(), Utils.manggiohang);
             recyclerView.setAdapter(adapter);
         }
+
+        btnmuahang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ThanhToanActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initView() {
@@ -73,6 +82,7 @@ public class GioHangActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         recyclerView = findViewById(R.id.recycleviewgiohang);
         btnmuahang = findViewById(R.id.btnmuahang);
+        
     }
 
     @Override
