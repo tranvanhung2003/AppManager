@@ -89,6 +89,24 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     Intent thuoc = new Intent(getApplicationContext(), ThuocActivity.class);
                     thuoc.putExtra("loai", position);
+
+                    String loaiSanPham = "";
+                    switch (position) {
+                        case 1:
+                            loaiSanPham = "Thực phẩm chức năng";
+                            break;
+                        case 2:
+                            loaiSanPham = "Dược mỹ phẩm";
+                            break;
+                        case 3:
+                            loaiSanPham = "Chăm sóc cá nhân";
+                            break;
+                        case 4:
+                            loaiSanPham = "Thiết bị y tế";
+                            break;
+                    }
+                    thuoc.putExtra("loaiSanPham", loaiSanPham);
+
                     startActivity(thuoc);
                 }
             }

@@ -33,6 +33,7 @@ public class ThuocActivity extends AppCompatActivity {
     CompositeDisposable compositeDisposable = new CompositeDisposable();
     int page = 1;
     int loai;
+    String loaiSanPham;
     ThuocAdapter adapterThuoc;
     List<SanPhamMoi> sanPhamMoiList;
     LinearLayoutManager linearLayoutManager;
@@ -45,6 +46,7 @@ public class ThuocActivity extends AppCompatActivity {
         setContentView(R.layout.activity_thuoc);
         apiBanThuoc = RetrofitClient.getInstance(Utils.BASE_URL).create(ApiBanThuoc.class);
         loai = getIntent().getIntExtra("loai", 1);
+        loaiSanPham = getIntent().getStringExtra("loaiSanPham");
 
         anhXa();
         ActionToolBar();
@@ -96,6 +98,8 @@ public class ThuocActivity extends AppCompatActivity {
     }
 
     private void getData(int page) {
+        toolbar.setTitle(loaiSanPham);
+
         compositeDisposable.add(apiBanThuoc.getSanPham(page, loai)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
