@@ -7,9 +7,12 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
         android:elevation="8dp"
         app:cardCornerRadius="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
@@ -21,8 +24,10 @@
                 android:id="@+id/iddonhang"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:padding="5dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="10dp"
                 android:text="Đơn hàng: 000"
                 android:textColor="@android:color/holo_red_light"
                 android:textStyle="bold" />
@@ -30,7 +35,10 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycleview_chitiet"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="20dp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -52,30 +52,19 @@ public class ChiTietActivity extends AppCompatActivity {
     }
 
     private void themGioHang() {
-        if (Utils.manggiohang.size() > 0) {
-            boolean flag = false;
-            int soluong = Integer.parseInt(spinner.getSelectedItem().toString());
-            for (int i = 0; i < Utils.manggiohang.size(); ++i) {
-                if (Utils.manggiohang.get(i).getIdsp() == sanPhamMoi.getId()) {
-                    Utils.manggiohang.get(i).setSoluong(soluong + Utils.manggiohang.get(i).getSoluong());
-                    long gia = Long.parseLong(sanPhamMoi.getGiasp()) * Utils.manggiohang.get(i).getSoluong();
-                    Utils.manggiohang.get(i).setGiasp(gia);
-                    flag = true;
-                }
+        boolean flag = false;
+        int soluong = Integer.parseInt(spinner.getSelectedItem().toString());
+
+        for (int i = 0; i < Utils.manggiohang.size(); ++i) {
+            if (Utils.manggiohang.get(i).getIdsp() == sanPhamMoi.getId()) {
+                Utils.manggiohang.get(i).setSoluong(soluong + Utils.manggiohang.get(i).getSoluong());
+                flag = true;
+                break;
             }
-            if (!flag) {
-                long gia = Long.parseLong(sanPhamMoi.getGiasp()) * soluong;
-                GioHang gioHang = new GioHang();
-                gioHang.setGiasp(gia);
-                gioHang.setSoluong(soluong);
-                gioHang.setIdsp(sanPhamMoi.getId());
-                gioHang.setTensp(sanPhamMoi.getTensp());
-                gioHang.setHinhsp(sanPhamMoi.getHinhanh());
-                Utils.manggiohang.add(gioHang);
-            }
-        } else {
-            int soluong = Integer.parseInt(spinner.getSelectedItem().toString());
-            long gia = Long.parseLong(sanPhamMoi.getGiasp()) * soluong;
+        }
+
+        if (!flag) {
+            long gia = Long.parseLong(sanPhamMoi.getGiasp());
             GioHang gioHang = new GioHang();
             gioHang.setGiasp(gia);
             gioHang.setSoluong(soluong);
@@ -91,6 +80,8 @@ public class ChiTietActivity extends AppCompatActivity {
         }
         if (totalItem > 0) {
             badge.setText(String.valueOf(totalItem));
+        } else {
+            badge.clear();
         }
     }
 
@@ -133,6 +124,8 @@ public class ChiTietActivity extends AppCompatActivity {
             }
             if (totalItem > 0) {
                 badge.setText(String.valueOf(totalItem));
+            } else {
+                badge.clear();
             }
         }
     }
@@ -151,14 +144,14 @@ public class ChiTietActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (Utils.manggiohang != null) {
-            int totalItem = 0;
-            for (int i = 0; i < Utils.manggiohang.size(); ++i) {
-                totalItem = totalItem + Utils.manggiohang.get(i).getSoluong();
-            }
-            if (totalItem > 0) {
-                badge.setText(String.valueOf(totalItem));
-            }
+        int totalItem = 0;
+        for (int i = 0; i < Utils.manggiohang.size(); ++i) {
+            totalItem = totalItem + Utils.manggiohang.get(i).getSoluong();
+        }
+        if (totalItem > 0) {
+            badge.setText(String.valueOf(totalItem));
+        } else {
+            badge.clear();
         }
     }
 }

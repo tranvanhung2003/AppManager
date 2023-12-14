@@ -1,8 +1,10 @@
 package com.example.appbanthuoc.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,7 +29,6 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class ThuocActivity extends AppCompatActivity {
     Toolbar toolbar;
-
     RecyclerView recyclerView;
     ApiBanThuoc apiBanThuoc;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
@@ -39,6 +40,7 @@ public class ThuocActivity extends AppCompatActivity {
     LinearLayoutManager linearLayoutManager;
     Handler handler = new Handler();
     boolean isLoading = false;
+    ImageView imgsearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,12 +144,23 @@ public class ThuocActivity extends AppCompatActivity {
     }
 
     private void anhXa() {
+        imgsearch = findViewById(R.id.imgsearch);
         toolbar = findViewById(R.id.toolbar);
         recyclerView = findViewById(R.id.recycleview_thuoc);
         linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
         sanPhamMoiList = new ArrayList<>();
+
+        imgsearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
+                intent.putExtra("searchsp", loai);
+                intent.putExtra("loaiSanPham", loaiSanPham);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

@@ -41,8 +41,8 @@ public class GioHangActivity extends AppCompatActivity {
 
     private void tinhTongTien() {
         tongtiensp = 0;
-        for (int i = 0; i < Utils.manggiohang.size(); ++i) {
-            tongtiensp = tongtiensp + (Utils.manggiohang.get(i).getGiasp() * Utils.manggiohang.get(i).getSoluong());
+        for (int i = 0; i < Utils.mangmuadhang.size(); ++i) {
+            tongtiensp = tongtiensp + (Utils.mangmuadhang.get(i).getGiasp() * Utils.mangmuadhang.get(i).getSoluong());
         }
         DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
         tongtien.setText(decimalFormat.format(tongtiensp) + "");
@@ -57,7 +57,7 @@ public class GioHangActivity extends AppCompatActivity {
                 finish();
             }
         });
-
+        
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);

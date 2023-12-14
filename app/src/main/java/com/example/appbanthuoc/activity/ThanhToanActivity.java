@@ -3,7 +3,6 @@ package com.example.appbanthuoc.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -14,6 +13,7 @@ import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.appbanthuoc.R;
+import com.example.appbanthuoc.model.GioHang;
 import com.example.appbanthuoc.retrofit.ApiBanThuoc;
 import com.example.appbanthuoc.retrofit.RetrofitClient;
 import com.example.appbanthuoc.utils.Utils;
@@ -46,8 +46,8 @@ public class ThanhToanActivity extends AppCompatActivity {
 
     private void countItem() {
         totalItem = 0;
-        for (int i = 0; i < Utils.manggiohang.size(); ++i) {
-            totalItem = totalItem + Utils.manggiohang.get(i).getSoluong();
+        for (int i = 0; i < Utils.mangmuadhang.size(); ++i) {
+            totalItem = totalItem + Utils.mangmuadhang.get(i).getSoluong();
         }
     }
 
@@ -75,17 +75,27 @@ public class ThanhToanActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Bạn chưa nhập địa chỉ", Toast.LENGTH_SHORT).show();
                 } else {
                     // post data
-                    Log.d("test", new Gson().toJson(Utils.manggiohang));
                     String str_email = Utils.user_current.getEmail();
                     String str_sdt = Utils.user_current.getMobile();
                     int id = Utils.user_current.getId();
                     compositeDisposable.add(apiBanThuoc.createOrder(str_email, str_sdt,
-                                    String.valueOf(tongtien), id, str_diachi, totalItem, new Gson().toJson(Utils.manggiohang))
+                                    String.valueOf(tongtien), id, str_diachi, totalItem, new Gson().toJson(Utils.mangmuadhang))
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(
                                     userModel -> {
                                         Toast.makeText(getApplicationContext(), "Đặt hàng thành công", Toast.LENGTH_SHORT).show();
+
+                                        for (int i = Utils.manggiohang.size() - 1; i >= 0; --i) {
+                                            for (GioHang y : Utils.mangmuadhang) {
+                                                if (Utils.manggiohang.get(i).getIdsp() == y.getIdsp()) {
+                                                    Utils.manggiohang.remove(i);
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                        Utils.mangmuadhang.clear();
+
                                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(intent);

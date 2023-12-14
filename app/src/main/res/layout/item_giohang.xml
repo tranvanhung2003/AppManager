@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="110dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <ImageView
@@ -92,6 +92,16 @@
                     android:textSize="15sp"
                     android:textStyle="bold" />
             </LinearLayout>
+
+            <CheckBox
+                android:id="@+id/item_giohang_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="20dp"
+                android:padding="10dp"
+                android:scaleX="1.5"
+                android:scaleY="1.5" />
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

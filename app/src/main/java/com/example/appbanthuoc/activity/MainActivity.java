@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     SanPhamMoiAdapter spAdapter;
     NotificationBadge badge;
     FrameLayout frameLayout;
+    ImageView imgsearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -197,6 +198,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void anhXa() {
+        imgsearch = findViewById(R.id.imgsearch);
         toolbar = (Toolbar) findViewById(R.id.toolbarmanhinhchinh);
         viewFlipper = (ViewFlipper) findViewById(R.id.viewlipper);
         recyclerViewManHinhChinh = (RecyclerView) findViewById(R.id.recycleview);
@@ -212,16 +214,15 @@ public class MainActivity extends AppCompatActivity {
         // khoi tao list
         mangloaisp = new ArrayList<>();
         mangSpMoi = new ArrayList<>();
-        if (Utils.manggiohang == null) {
-            Utils.manggiohang = new ArrayList<>();
+
+        int totalItem = 0;
+        for (int i = 0; i < Utils.manggiohang.size(); ++i) {
+            totalItem = totalItem + Utils.manggiohang.get(i).getSoluong();
+        }
+        if (totalItem > 0) {
+            badge.setText(String.valueOf(totalItem));
         } else {
-            int totalItem = 0;
-            for (int i = 0; i < Utils.manggiohang.size(); ++i) {
-                totalItem = totalItem + Utils.manggiohang.get(i).getSoluong();
-            }
-            if (totalItem > 0) {
-                badge.setText(String.valueOf(totalItem));
-            }
+            badge.clear();
         }
 
         frameLayout.setOnClickListener(new View.OnClickListener() {
@@ -229,6 +230,16 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent giohang = new Intent(getApplicationContext(), GioHangActivity.class);
                 startActivity(giohang);
+            }
+        });
+
+        imgsearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
+                intent.putExtra("loaiSanPham", "sản phẩm");
+                intent.putExtra("searchsp", 0);
+                startActivity(intent);
             }
         });
     }
@@ -242,6 +253,8 @@ public class MainActivity extends AppCompatActivity {
         }
         if (totalItem > 0) {
             badge.setText(String.valueOf(totalItem));
+        } else {
+            badge.clear();
         }
     }
 

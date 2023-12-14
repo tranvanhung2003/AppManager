@@ -2,7 +2,6 @@ package com.example.appbanthuoc.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -73,12 +72,7 @@ public class DanhNhapActivity extends AppCompatActivity {
         if (Paper.book().read("islogin") != null) {
             boolean flag = Paper.book().read("islogin");
             if (flag) {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        dangNhap(Paper.book().read("email"), Paper.book().read("pass"), false);
-                    }
-                }, 1000);
+                dangNhap(Paper.book().read("email"), Paper.book().read("pass"), false);
             }
         } else {
             if (Paper.book().read("email") != null && Paper.book().read("pass") != null) {
@@ -103,8 +97,9 @@ public class DanhNhapActivity extends AppCompatActivity {
                                     Paper.book().write("email", str_email);
                                     Paper.book().write("pass", str_pass);
                                 }
-
+                                
                                 Utils.user_current = userModel.getResult().get(0);
+
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 startActivity(intent);
                                 finish();

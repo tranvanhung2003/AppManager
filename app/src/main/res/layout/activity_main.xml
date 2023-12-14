@@ -23,24 +23,36 @@
                 android:background="#4DD0E1"
                 app:title="Trang chính">
 
-                <FrameLayout
-                    android:id="@+id/framegiohang"
-                    android:layout_width="70dp"
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="?attr/actionBarSize"
-                    android:layout_gravity="end">
+                    android:layout_gravity="end"
+                    android:orientation="horizontal">
 
                     <ImageView
+                        android:id="@+id/imgsearch"
                         android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_cart_24" />
+                        android:layout_height="?attr/actionBarSize"
+                        android:src="@drawable/ic_search_24" />
 
-                    <com.nex3z.notificationbadge.NotificationBadge
-                        android:id="@+id/menu_sl"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        android:layout_gravity="top|end" />
-                </FrameLayout>
+                    <FrameLayout
+                        android:id="@+id/framegiohang"
+                        android:layout_width="70dp"
+                        android:layout_height="?attr/actionBarSize">
+
+                        <ImageView
+                            android:layout_width="42dp"
+                            android:layout_height="39dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_cart_24" />
+
+                        <com.nex3z.notificationbadge.NotificationBadge
+                            android:id="@+id/menu_sl"
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:layout_gravity="top|end" />
+                    </FrameLayout>
+                </LinearLayout>
             </androidx.appcompat.widget.Toolbar>
 
             <ViewFlipper

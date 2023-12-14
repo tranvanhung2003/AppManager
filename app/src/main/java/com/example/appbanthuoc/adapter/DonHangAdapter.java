@@ -35,7 +35,7 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         DonHang donHang = listdonhang.get(position);
-        holder.txtdonhang.setText("Đơn hàng:" + donHang.getId());
+        holder.txtdonhang.setText("Đơn hàng: " + donHang.getId());
         LinearLayoutManager layoutManager = new LinearLayoutManager(holder.reChitiet.getContext(),
                 LinearLayoutManager.VERTICAL, false);
         layoutManager.setInitialPrefetchItemCount(donHang.getItem().size());

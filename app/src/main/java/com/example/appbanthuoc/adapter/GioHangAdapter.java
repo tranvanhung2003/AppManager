@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -51,6 +53,23 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.MyViewHo
         holder.item_giohang_gia.setText(decimalFormat.format(gioHang.getGiasp()) + "");
         long gia = gioHang.getSoluong() * gioHang.getGiasp();
         holder.item_giohang_giasp2.setText(decimalFormat.format(gia));
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    Utils.mangmuadhang.add(gioHang);
+                    EventBus.getDefault().postSticky(new TinhTongEvent());
+                } else {
+                    for (int i = Utils.mangmuadhang.size() - 1; i >= 0; --i) {
+                        if (Utils.mangmuadhang.get(i).getIdsp() == gioHang.getIdsp()) {
+                            Utils.mangmuadhang.remove(i);
+                            EventBus.getDefault().postSticky(new TinhTongEvent());
+                        }
+                    }
+                }
+            }
+        });
+
         holder.setListener(new ImageClickListener() {
             @Override
             public void onImageClick(View view, int pos, int giatri) {
@@ -72,20 +91,23 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.MyViewHo
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Utils.manggiohang.remove(pos);
+
                                 notifyDataSetChanged();
+
                                 EventBus.getDefault().postSticky(new TinhTongEvent());
                             }
                         });
                         builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                EventBus.getDefault().postSticky(new TinhTongEvent());
                                 dialog.dismiss();
                             }
                         });
                         builder.show();
                     }
                 } else if (giatri == 2) {
-                    if (gioHangList.get(pos).getSoluong() < 11) {
+                    if (gioHangList.get(pos).getSoluong() < 100) {
                         int soluongmoi = gioHangList.get(pos).getSoluong() + 1;
                         gioHangList.get(pos).setSoluong(soluongmoi);
                     }
@@ -108,6 +130,7 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.MyViewHo
         ImageView item_giohang_image, imgtru, imgcong;
         TextView item_giohang_tensp, item_giohang_gia, item_giohang_soluong, item_giohang_giasp2;
         ImageClickListener listener;
+        CheckBox checkBox;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -118,6 +141,7 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.MyViewHo
             item_giohang_giasp2 = itemView.findViewById(R.id.item_giohang_giasp2);
             imgtru = itemView.findViewById(R.id.item_giohang_tru);
             imgcong = itemView.findViewById(R.id.item_giohang_cong);
+            checkBox = itemView.findViewById(R.id.item_giohang_check);
 
             // event click
             imgtru.setOnClickListener(this);
