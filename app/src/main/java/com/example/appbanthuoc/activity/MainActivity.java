@@ -88,13 +88,16 @@ public class MainActivity extends AppCompatActivity {
                     Intent trangchu = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(trangchu);
                     finish();
-                } else if (position == 7) {
+                } else if (position == 8) {
                     Paper.book().delete("islogin");
                     Paper.book().delete("email");
                     Paper.book().delete("pass");
                     Intent dangnhap = new Intent(getApplicationContext(), DanhNhapActivity.class);
                     startActivity(dangnhap);
                     finish();
+                } else if (position == 5) {
+                    Intent donhang = new Intent(getApplicationContext(), XemDonActivity.class);
+                    startActivity(donhang);
                 } else {
                     Intent thuoc = new Intent(getApplicationContext(), ThuocActivity.class);
                     thuoc.putExtra("loai", position);
