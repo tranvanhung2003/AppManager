@@ -15,6 +15,7 @@ import com.example.appbanthuoc.retrofit.ApiBanThuoc;
 import com.example.appbanthuoc.retrofit.RetrofitClient;
 import com.example.appbanthuoc.utils.Utils;
 
+import io.paperdb.Paper;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -64,6 +65,8 @@ public class DangKyActivity extends AppCompatActivity {
                                         Toast.makeText(getApplicationContext(), userModel.getMessage(), Toast.LENGTH_SHORT).show();
                                         Utils.user_current.setEmail(str_email);
                                         Utils.user_current.setPass(str_pass);
+                                        Paper.book().write("email", str_email);
+                                        Paper.book().write("pass", str_pass);
                                         Intent intent = new Intent(getApplicationContext(), DanhNhapActivity.class);
                                         startActivity(intent);
                                         finish();

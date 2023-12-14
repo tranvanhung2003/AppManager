@@ -40,6 +40,7 @@ import com.nex3z.notificationbadge.NotificationBadge;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.paperdb.Paper;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -86,10 +87,17 @@ public class MainActivity extends AppCompatActivity {
                 if (position == 0) {
                     Intent trangchu = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(trangchu);
+                    finish();
+                } else if (position == 7) {
+                    Paper.book().delete("islogin");
+                    Paper.book().delete("email");
+                    Paper.book().delete("pass");
+                    Intent dangnhap = new Intent(getApplicationContext(), DanhNhapActivity.class);
+                    startActivity(dangnhap);
+                    finish();
                 } else {
                     Intent thuoc = new Intent(getApplicationContext(), ThuocActivity.class);
                     thuoc.putExtra("loai", position);
-
                     String loaiSanPham = "";
                     switch (position) {
                         case 1:
@@ -106,7 +114,6 @@ public class MainActivity extends AppCompatActivity {
                             break;
                     }
                     thuoc.putExtra("loaiSanPham", loaiSanPham);
-
                     startActivity(thuoc);
                 }
             }
