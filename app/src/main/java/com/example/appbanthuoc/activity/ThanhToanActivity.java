@@ -21,6 +21,7 @@ import com.google.gson.Gson;
 
 import java.text.DecimalFormat;
 
+import io.paperdb.Paper;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -94,10 +95,12 @@ public class ThanhToanActivity extends AppCompatActivity {
                                                 }
                                             }
                                         }
+
+                                        Paper.book().write("manggiohang", Utils.manggiohang);
                                         Utils.mangmuadhang.clear();
 
                                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(intent);
                                         finish();
                                     },

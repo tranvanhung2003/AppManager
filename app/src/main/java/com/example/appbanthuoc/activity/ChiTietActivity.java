@@ -23,6 +23,8 @@ import com.nex3z.notificationbadge.NotificationBadge;
 import java.text.DecimalFormat;
 import java.util.stream.IntStream;
 
+import io.paperdb.Paper;
+
 public class ChiTietActivity extends AppCompatActivity {
     TextView tensp, giasp, mota;
     Button btnthem;
@@ -73,6 +75,7 @@ public class ChiTietActivity extends AppCompatActivity {
             gioHang.setHinhsp(sanPhamMoi.getHinhanh());
             Utils.manggiohang.add(gioHang);
         }
+        Paper.book().write("manggiohang", Utils.manggiohang);
 
         int totalItem = 0;
         for (int i = 0; i < Utils.manggiohang.size(); ++i) {

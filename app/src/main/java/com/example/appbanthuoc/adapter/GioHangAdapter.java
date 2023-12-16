@@ -26,6 +26,8 @@ import org.greenrobot.eventbus.EventBus;
 import java.text.DecimalFormat;
 import java.util.List;
 
+import io.paperdb.Paper;
+
 public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.MyViewHolder> {
     Context context;
     List<GioHang> gioHangList;
@@ -77,6 +79,7 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.MyViewHo
                     if (gioHangList.get(pos).getSoluong() > 1) {
                         int soluongmoi = gioHangList.get(pos).getSoluong() - 1;
                         gioHangList.get(pos).setSoluong(soluongmoi);
+                        Paper.book().write("manggiohang", Utils.manggiohang);
 
                         holder.item_giohang_soluong.setText(gioHangList.get(pos).getSoluong() + "");
                         long gia = gioHangList.get(pos).getSoluong() * gioHangList.get(pos).getGiasp();
@@ -91,6 +94,7 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.MyViewHo
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 Utils.manggiohang.remove(pos);
+                                Paper.book().write("manggiohang", Utils.manggiohang);
 
                                 notifyDataSetChanged();
 
@@ -110,6 +114,7 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.MyViewHo
                     if (gioHangList.get(pos).getSoluong() < 100) {
                         int soluongmoi = gioHangList.get(pos).getSoluong() + 1;
                         gioHangList.get(pos).setSoluong(soluongmoi);
+                        Paper.book().write("manggiohang", Utils.manggiohang);
                     }
 
                     holder.item_giohang_soluong.setText(gioHangList.get(pos).getSoluong() + "");

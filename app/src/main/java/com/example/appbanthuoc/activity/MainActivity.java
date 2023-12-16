@@ -6,6 +6,7 @@ import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
@@ -61,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
     NotificationBadge badge;
     FrameLayout frameLayout;
     ImageView imgsearch;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,19 +89,24 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) {
-                    Intent trangchu = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(trangchu);
-                    finish();
+
+                } else if (position == 5) {
+                    Intent donhang = new Intent(getApplicationContext(), XemDonActivity.class);
+                    startActivity(donhang);
+                } else if (position == 6) {
+
+                } else if (position == 7) {
+                    String number = "0368228453";
+                    Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + number));
+                    startActivity(intent);
                 } else if (position == 8) {
                     Paper.book().delete("islogin");
                     Paper.book().delete("email");
                     Paper.book().delete("pass");
+                    Paper.book().delete("user");
                     Intent dangnhap = new Intent(getApplicationContext(), DanhNhapActivity.class);
                     startActivity(dangnhap);
                     finish();
-                } else if (position == 5) {
-                    Intent donhang = new Intent(getApplicationContext(), XemDonActivity.class);
-                    startActivity(donhang);
                 } else {
                     Intent thuoc = new Intent(getApplicationContext(), ThuocActivity.class);
                     thuoc.putExtra("loai", position);
@@ -125,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getSpMoi() {
+        progressBar.setVisibility(View.VISIBLE);
         compositeDisposable.add(apiBanThuoc.getSpMoi()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -141,6 +150,7 @@ public class MainActivity extends AppCompatActivity {
                                     "Không kết nối được với server " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                 ));
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     private void getLoaiSanPham() {
@@ -210,6 +220,7 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout);
         badge = findViewById(R.id.menu_sl);
         frameLayout = findViewById(R.id.framegiohang);
+        progressBar = findViewById(R.id.progressbar);
 
         // khoi tao list
         mangloaisp = new ArrayList<>();

@@ -2,6 +2,7 @@ package com.example.appbanthuoc.activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -23,6 +24,7 @@ public class XemDonActivity extends AppCompatActivity {
     ApiBanThuoc apiBanThuoc;
     RecyclerView redonhang;
     Toolbar toolbar;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,7 @@ public class XemDonActivity extends AppCompatActivity {
     }
 
     private void getOrder() {
+        progressBar.setVisibility(View.VISIBLE);
         compositeDisposable.add(apiBanThuoc.xemDonHang(Utils.user_current.getId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -47,6 +50,7 @@ public class XemDonActivity extends AppCompatActivity {
 
                         }
                 ));
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     private void initToolbar() {
@@ -66,6 +70,7 @@ public class XemDonActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         redonhang.setLayoutManager(layoutManager);
+        progressBar = findViewById(R.id.progressbar);
     }
 
     @Override

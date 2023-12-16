@@ -68,6 +68,7 @@ public class DangKyActivity extends AppCompatActivity {
                                         Paper.book().write("email", str_email);
                                         Paper.book().write("pass", str_pass);
                                         Intent intent = new Intent(getApplicationContext(), DanhNhapActivity.class);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(intent);
                                         finish();
                                     } else {

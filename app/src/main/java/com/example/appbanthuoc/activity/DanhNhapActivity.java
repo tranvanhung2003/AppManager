@@ -22,7 +22,7 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class DanhNhapActivity extends AppCompatActivity {
-    TextView txtdangky;
+    TextView txtdangky, txtresetpass;
     EditText email, pass;
     AppCompatButton btndangnhap;
     ApiBanThuoc apiBanThuoc;
@@ -45,6 +45,13 @@ public class DanhNhapActivity extends AppCompatActivity {
             }
         });
 
+        txtresetpass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ResetPassActivity.class);
+                startActivity(intent);
+            }
+        });
         btndangnhap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,10 +67,10 @@ public class DanhNhapActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        Paper.init(this);
         apiBanThuoc = RetrofitClient.getInstance(Utils.BASE_URL).create(ApiBanThuoc.class);
 
         txtdangky = findViewById(R.id.txtdangky);
+        txtresetpass = findViewById(R.id.txtresetpass);
         email = findViewById(R.id.email);
         pass = findViewById(R.id.pass);
         btndangnhap = findViewById(R.id.btndangnhap);
@@ -97,8 +104,9 @@ public class DanhNhapActivity extends AppCompatActivity {
                                     Paper.book().write("email", str_email);
                                     Paper.book().write("pass", str_pass);
                                 }
-                                
+
                                 Utils.user_current = userModel.getResult().get(0);
+                                Paper.book().write("user", userModel.getResult().get(0));
 
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 startActivity(intent);
