@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "AppBanThuoc"
+rootProject.name = "AppManager"
 include(":app")

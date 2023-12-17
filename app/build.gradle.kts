@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.appbanthuoc"
+    namespace = "com.example.appmanager"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.appbanthuoc"
+        applicationId = "com.example.appmanager"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
