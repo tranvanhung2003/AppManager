@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -41,6 +42,7 @@ public class ThuocActivity extends AppCompatActivity {
     Handler handler = new Handler();
     boolean isLoading = false;
     ImageView imgsearch;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +102,7 @@ public class ThuocActivity extends AppCompatActivity {
     }
 
     private void getData(int page) {
+        progressBar.setVisibility(View.VISIBLE);
         toolbar.setTitle(loaiSanPham);
 
         compositeDisposable.add(apiBanThuoc.getSanPham(page, loai)
@@ -112,6 +115,7 @@ public class ThuocActivity extends AppCompatActivity {
                                     sanPhamMoiList = sanPhamMoiModel.getResult();
                                     adapterThuoc = new ThuocAdapter(getApplicationContext(), sanPhamMoiList);
                                     recyclerView.setAdapter(adapterThuoc);
+                                    progressBar.setVisibility(View.INVISIBLE);
                                 } else {
                                     int vitri = sanPhamMoiList.size() - 1;
                                     int soluongadd = sanPhamMoiModel.getResult().size();
@@ -119,15 +123,18 @@ public class ThuocActivity extends AppCompatActivity {
                                         sanPhamMoiList.add(sanPhamMoiModel.getResult().get(i));
                                     }
                                     adapterThuoc.notifyItemRangeInserted(vitri, soluongadd);
+                                    progressBar.setVisibility(View.INVISIBLE);
                                 }
                             } else {
                                 Toast.makeText(getApplicationContext(), "Đã xem hết sản phẩm", Toast.LENGTH_SHORT).show();
                                 isLoading = true;
+                                progressBar.setVisibility(View.INVISIBLE);
                             }
                         },
                         throwable -> {
                             Toast.makeText(getApplicationContext(),
                                     "Không kết nối được với server " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.INVISIBLE);
                         }
                 ));
     }
@@ -151,6 +158,7 @@ public class ThuocActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
         sanPhamMoiList = new ArrayList<>();
+        progressBar = findViewById(R.id.progressbar);
 
         imgsearch.setOnClickListener(new View.OnClickListener() {
             @Override

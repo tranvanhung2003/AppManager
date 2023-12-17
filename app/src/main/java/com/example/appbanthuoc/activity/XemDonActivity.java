@@ -45,12 +45,12 @@ public class XemDonActivity extends AppCompatActivity {
                         donHangModel -> {
                             DonHangAdapter adapter = new DonHangAdapter(getApplicationContext(), donHangModel.getResult());
                             redonhang.setAdapter(adapter);
+                            progressBar.setVisibility(View.INVISIBLE);
                         },
                         throwable -> {
-
+                            progressBar.setVisibility(View.INVISIBLE);
                         }
                 ));
-        progressBar.setVisibility(View.INVISIBLE);
     }
 
     private void initToolbar() {

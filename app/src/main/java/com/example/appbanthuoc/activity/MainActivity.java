@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                     Intent donhang = new Intent(getApplicationContext(), XemDonActivity.class);
                     startActivity(donhang);
                 } else if (position == 6) {
-
+                    
                 } else if (position == 7) {
                     String number = "0368228453";
                     Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + number));
@@ -143,14 +143,15 @@ public class MainActivity extends AppCompatActivity {
                                 mangSpMoi = sanPhamMoiModel.getResult();
                                 spAdapter = new SanPhamMoiAdapter(getApplicationContext(), mangSpMoi);
                                 recyclerViewManHinhChinh.setAdapter(spAdapter);
+                                progressBar.setVisibility(View.INVISIBLE);
                             }
                         },
                         throwable -> {
                             Toast.makeText(getApplicationContext(),
                                     "Không kết nối được với server " + throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.INVISIBLE);
                         }
                 ));
-        progressBar.setVisibility(View.INVISIBLE);
     }
 
     private void getLoaiSanPham() {

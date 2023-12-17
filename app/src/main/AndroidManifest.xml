@@ -39,9 +39,7 @@
             android:exported="true" />
         <activity
             android:name=".activity.DanhNhapActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".activity.DangKyActivity"
             android:exported="true" />
