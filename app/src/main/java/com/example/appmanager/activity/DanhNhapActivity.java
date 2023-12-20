@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
@@ -15,6 +16,11 @@ import com.example.appmanager.R;
 import com.example.appmanager.retrofit.ApiBanThuoc;
 import com.example.appmanager.retrofit.RetrofitClient;
 import com.example.appmanager.utils.Utils;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import io.paperdb.Paper;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -24,6 +30,8 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class DanhNhapActivity extends AppCompatActivity {
     TextView txtdangky, txtresetpass;
     EditText email, pass;
+    FirebaseAuth firebaseAuth;
+    FirebaseUser user;
     AppCompatButton btndangnhap;
     ApiBanThuoc apiBanThuoc;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
@@ -60,10 +68,28 @@ public class DanhNhapActivity extends AppCompatActivity {
                 if (TextUtils.isEmpty(str_email) || TextUtils.isEmpty(str_pass)) {
                     Toast.makeText(getApplicationContext(), "Bạn chưa nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
                 } else {
-                    dangNhap(str_email, str_pass, true);
+                    dangNhapFirebase(str_email, str_pass, true);
                 }
             }
         });
+    }
+
+    private void dangNhapFirebase(String email, String pass, boolean needIsLogin) {
+        if (user != null) {
+            // user da co dang nhap firebase
+            dangNhap(email, pass, needIsLogin);
+        } else {
+            // user da singout
+            firebaseAuth.signInWithEmailAndPassword(email, pass)
+                    .addOnCompleteListener(DanhNhapActivity.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                dangNhap(email, pass, needIsLogin);
+                            }
+                        }
+                    });
+        }
     }
 
     private void initView() {
@@ -74,12 +100,14 @@ public class DanhNhapActivity extends AppCompatActivity {
         email = findViewById(R.id.email);
         pass = findViewById(R.id.pass);
         btndangnhap = findViewById(R.id.btndangnhap);
+        firebaseAuth = FirebaseAuth.getInstance();
+        user = firebaseAuth.getCurrentUser();
 
         // read data
         if (Paper.book().read("islogin") != null) {
             boolean flag = Paper.book().read("islogin");
             if (flag) {
-                dangNhap(Paper.book().read("email"), Paper.book().read("pass"), false);
+                dangNhapFirebase(Paper.book().read("email"), Paper.book().read("pass"), false);
             }
         } else {
             if (Paper.book().read("email") != null && Paper.book().read("pass") != null) {

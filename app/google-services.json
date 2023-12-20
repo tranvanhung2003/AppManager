@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "146416036609",
+    "project_id": "appbanthuoc",
+    "storage_bucket": "appbanthuoc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:146416036609:android:bbe7c60218595750d94900",
+        "android_client_info": {
+          "package_name": "com.example.appmanager"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoUB4dmb1y2pYtAKRnDD0ajLuEf1xq3mg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

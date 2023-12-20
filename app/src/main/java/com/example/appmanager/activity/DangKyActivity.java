@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
@@ -14,6 +15,11 @@ import com.example.appmanager.R;
 import com.example.appmanager.retrofit.ApiBanThuoc;
 import com.example.appmanager.retrofit.RetrofitClient;
 import com.example.appmanager.utils.Utils;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import io.paperdb.Paper;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -25,6 +31,7 @@ public class DangKyActivity extends AppCompatActivity {
     AppCompatButton button;
     ApiBanThuoc apiBanThuoc;
     CompositeDisposable compositeDisposable = new CompositeDisposable();
+    FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,34 +62,51 @@ public class DangKyActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Bạn chưa nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
         } else {
             if (str_pass.equals(str_repass)) {
-                // post data
-                compositeDisposable.add(apiBanThuoc.dangKy(str_email, str_pass, str_username, str_mobile)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(
-                                userModel -> {
-                                    if (userModel.isSuccess()) {
-                                        Toast.makeText(getApplicationContext(), userModel.getMessage(), Toast.LENGTH_SHORT).show();
-                                        Utils.user_current.setEmail(str_email);
-                                        Utils.user_current.setPass(str_pass);
-                                        Paper.book().write("email", str_email);
-                                        Paper.book().write("pass", str_pass);
-                                        Intent intent = new Intent(getApplicationContext(), DanhNhapActivity.class);
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        startActivity(intent);
-                                        finish();
-                                    } else {
-                                        Toast.makeText(getApplicationContext(), userModel.getMessage(), Toast.LENGTH_SHORT).show();
+                firebaseAuth = FirebaseAuth.getInstance();
+                firebaseAuth.createUserWithEmailAndPassword(str_email, str_pass)
+                        .addOnCompleteListener(DangKyActivity.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    FirebaseUser user = firebaseAuth.getCurrentUser();
+                                    if (user != null) {
+                                        postData(str_email, str_pass, str_username, str_mobile, user.getUid());
                                     }
-                                },
-                                throwable -> {
-                                    Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                 }
-                        ));
+                            }
+                        });
             } else {
                 Toast.makeText(getApplicationContext(), "Password chưa khớp", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    private void postData(String str_email, String str_pass, String str_username, String str_mobile, String uid) {
+        compositeDisposable.add(apiBanThuoc.dangKy(str_email, str_pass, str_username, str_mobile, uid)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        userModel -> {
+                            if (userModel.isSuccess()) {
+                                Toast.makeText(getApplicationContext(), userModel.getMessage(), Toast.LENGTH_SHORT).show();
+                                Utils.user_current.setEmail(str_email);
+                                Utils.user_current.setPass(str_pass);
+                                Paper.book().write("email", str_email);
+                                Paper.book().write("pass", str_pass);
+                                Intent intent = new Intent(getApplicationContext(), DanhNhapActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Toast.makeText(getApplicationContext(), userModel.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        },
+                        throwable -> {
+                            Toast.makeText(getApplicationContext(), throwable.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                ));
     }
 
     private void initView() {
