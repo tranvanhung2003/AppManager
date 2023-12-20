@@ -221,7 +221,9 @@ public class ThemSanPhamActivity extends AppCompatActivity {
                 MessageModel serverResponse = response.body();
                 if (serverResponse != null) {
                     if (serverResponse.isSuccess()) {
-                        binding.hinhanh.setText(serverResponse.getName());
+                        if (!flagSua) {
+                            binding.hinhanh.setText(serverResponse.getName());
+                        }
                     } else {
                         Toast.makeText(getApplicationContext(), serverResponse.getMessage(), Toast.LENGTH_SHORT).show();
                     }
