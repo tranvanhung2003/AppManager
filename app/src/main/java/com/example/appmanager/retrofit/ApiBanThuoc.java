@@ -2,14 +2,19 @@ package com.example.appmanager.retrofit;
 
 import com.example.appmanager.model.DonHangModel;
 import com.example.appmanager.model.LoaiSpModel;
+import com.example.appmanager.model.MessageModel;
 import com.example.appmanager.model.SanPhamMoiModel;
 import com.example.appmanager.model.UserModel;
 
 import io.reactivex.rxjava3.core.Observable;
+import okhttp3.MultipartBody;
+import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 
 public interface ApiBanThuoc {
     // GET DATA
@@ -72,5 +77,36 @@ public interface ApiBanThuoc {
     Observable<SanPhamMoiModel> search(
             @Field("search") String search,
             @Field("loai") int loai
+    );
+
+    @POST("insertsp.php")
+    @FormUrlEncoded
+    Observable<MessageModel> insertSp(
+            @Field("tensp") String tensp,
+            @Field("gia") String gia,
+            @Field("hinhanh") String hinhanh,
+            @Field("mota") String mota,
+            @Field("loai") int id
+    );
+
+    @POST("updatesp.php")
+    @FormUrlEncoded
+    Observable<MessageModel> updateSp(
+            @Field("id") int id,
+            @Field("tensp") String tensp,
+            @Field("gia") String gia,
+            @Field("hinhanh") String hinhanh,
+            @Field("mota") String mota,
+            @Field("loai") int idloai
+    );
+
+    @Multipart
+    @POST("upload.php")
+    Call<MessageModel> uploadFile(@Part MultipartBody.Part file);
+
+    @POST("xoa.php")
+    @FormUrlEncoded
+    Observable<MessageModel> xoaSanPham(
+            @Field("id") int id
     );
 }

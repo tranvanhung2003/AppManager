@@ -17,6 +17,7 @@ import com.example.appmanager.Interface.ItemClickListener;
 import com.example.appmanager.R;
 import com.example.appmanager.activity.ChiTietActivity;
 import com.example.appmanager.model.SanPhamMoi;
+import com.example.appmanager.utils.Utils;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -53,7 +54,12 @@ public class ThuocAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
             myViewHolder.giasp.setText("Giá: " + decimalFormat.format(Double.parseDouble(sanPham.getGiasp())) + "Đ");
             myViewHolder.mota.setText(sanPham.getMota());
-            Glide.with(context).load(sanPham.getHinhanh()).into(myViewHolder.hinhanh);
+            if (sanPham.getHinhanh().contains("http")) {
+                Glide.with(context).load(sanPham.getHinhanh()).into(myViewHolder.hinhanh);
+            } else {
+                String hinh = Utils.BASE_URL + "images/" + sanPham.getHinhanh();
+                Glide.with(context).load(hinh).into(myViewHolder.hinhanh);
+            }
             myViewHolder.setItemClickListener(new ItemClickListener() {
                 @Override
                 public void onClick(View view, int pos, boolean isLongClick) {

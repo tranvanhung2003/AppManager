@@ -26,6 +26,10 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+    buildFeatures {
+        viewBinding = true
+        dataBinding = true
+    }
 }
 
 dependencies {
@@ -60,4 +64,10 @@ dependencies {
 
     // Gson
     implementation("com.google.code.gson:gson:2.10.1")
+
+    // Neumorphism
+    implementation("com.github.fornewid:neumorphism:0.3.2")
+
+    // Image Picker
+    implementation("com.github.dhaval2404:imagepicker:2.1")
 }

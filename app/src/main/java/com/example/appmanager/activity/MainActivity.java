@@ -107,6 +107,9 @@ public class MainActivity extends AppCompatActivity {
                     Intent dangnhap = new Intent(getApplicationContext(), DanhNhapActivity.class);
                     startActivity(dangnhap);
                     finish();
+                } else if (position == 9) {
+                    Intent intent = new Intent(getApplicationContext(), QuanLyActivity.class);
+                    startActivity(intent);
                 } else {
                     Intent thuoc = new Intent(getApplicationContext(), ThuocActivity.class);
                     thuoc.putExtra("loai", position);
@@ -268,6 +271,8 @@ public class MainActivity extends AppCompatActivity {
         } else {
             badge.clear();
         }
+
+        getSpMoi();
     }
 
     private boolean isConnected(Context context) {
