@@ -117,4 +117,10 @@ public interface ApiBanThuoc {
     Observable<MessageModel> xoaSanPham(
             @Field("id") int id
     );
+
+    @POST("gettoken.php")
+    @FormUrlEncoded
+    Observable<UserModel> getToken(
+            @Field("status") int status
+    );
 }

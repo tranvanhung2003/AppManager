@@ -7,6 +7,7 @@ public class User {
     String username;
     String mobile;
     String uid;
+    String token;
 
     public int getId() {
         return id;
@@ -54,5 +55,13 @@ public class User {
 
     public void setUid(String uid) {
         this.uid = uid;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

@@ -3,6 +3,7 @@ package com.example.appmanager.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -14,12 +15,17 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.example.appmanager.R;
 import com.example.appmanager.model.GioHang;
+import com.example.appmanager.model.NotiSendData;
 import com.example.appmanager.retrofit.ApiBanThuoc;
+import com.example.appmanager.retrofit.ApiPushNotification;
 import com.example.appmanager.retrofit.RetrofitClient;
+import com.example.appmanager.retrofit.RetrofitClientNoti;
 import com.example.appmanager.utils.Utils;
 import com.google.gson.Gson;
 
 import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.Map;
 
 import io.paperdb.Paper;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -85,6 +91,7 @@ public class ThanhToanActivity extends AppCompatActivity {
                             .observeOn(AndroidSchedulers.mainThread())
                             .subscribe(
                                     userModel -> {
+                                        pushNotiToUser();
                                         Toast.makeText(getApplicationContext(), "Đặt hàng thành công", Toast.LENGTH_SHORT).show();
 
                                         for (int i = Utils.manggiohang.size() - 1; i >= 0; --i) {
@@ -111,6 +118,41 @@ public class ThanhToanActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void pushNotiToUser() {
+        // get token
+        compositeDisposable.add(apiBanThuoc.getToken(1)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        userModel -> {
+                            if (userModel.isSuccess()) {
+                                for (int i = 0; i < userModel.getResult().size(); ++i) {
+                                    // String token = "d7vwNtziTIizvflDwGPxl4:APA91bE-rMNwaN3wjsntRE_UgOC9xiqsks5z2h_fi_Up7A7UYShMUuQNhuzGhlzgtD1M0RZSz0aR6r-Z93YHOCwVwN7ggiVgRq3aFCJPUQSZi6KxAPEm0pJzOxpdtJPrN5sdmBfsz6Gc";
+                                    Map<String, String> data = new HashMap<>();
+                                    data.put("title", "Thông báo");
+                                    data.put("body", "Bạn có đơn hàng mới");
+                                    NotiSendData notiSendData = new NotiSendData(userModel.getResult().get(i).getToken(), data);
+                                    ApiPushNotification apiPushNotification = RetrofitClientNoti.getInstance().create(ApiPushNotification.class);
+                                    compositeDisposable.add(apiPushNotification.sendNotification(notiSendData)
+                                            .subscribeOn(Schedulers.io())
+                                            .observeOn(AndroidSchedulers.mainThread())
+                                            .subscribe(
+                                                    notiResponse -> {
+
+                                                    },
+                                                    throwable -> {
+                                                        Log.d("Log", throwable.getMessage());
+                                                    }
+                                            ));
+                                }
+                            }
+                        },
+                        throwable -> {
+                            Log.d("Log", throwable.getMessage());
+                        }
+                ));
     }
 
     private void initView() {
