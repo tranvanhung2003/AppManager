@@ -37,6 +37,31 @@ public class XemDonActivity extends AppCompatActivity {
     }
 
     private void getOrder() {
+        if (Utils.user_current.getStatus() == 0) {
+            getOrderUser();
+        } else {
+            getOrderAdmin();
+        }
+    }
+
+    private void getOrderAdmin() {
+        progressBar.setVisibility(View.VISIBLE);
+        compositeDisposable.add(apiBanThuoc.xemDonHang(0)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        donHangModel -> {
+                            DonHangAdapter adapter = new DonHangAdapter(getApplicationContext(), donHangModel.getResult());
+                            redonhang.setAdapter(adapter);
+                            progressBar.setVisibility(View.INVISIBLE);
+                        },
+                        throwable -> {
+                            progressBar.setVisibility(View.INVISIBLE);
+                        }
+                ));
+    }
+
+    private void getOrderUser() {
         progressBar.setVisibility(View.VISIBLE);
         compositeDisposable.add(apiBanThuoc.xemDonHang(Utils.user_current.getId())
                 .subscribeOn(Schedulers.io())

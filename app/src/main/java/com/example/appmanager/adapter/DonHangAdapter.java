@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appmanager.R;
 import com.example.appmanager.model.DonHang;
+import com.example.appmanager.utils.Utils;
 
 import java.util.List;
 
@@ -36,6 +37,11 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.MyViewHo
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         DonHang donHang = listdonhang.get(position);
         holder.txtdonhang.setText("Đơn hàng: " + donHang.getId());
+        if (Utils.user_current.getStatus() == 1) {
+            holder.trangthai.setText(trangThaiDon(donHang.getTrangthai()));
+            holder.trangthai.setVisibility(View.VISIBLE);
+        }
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(holder.reChitiet.getContext(),
                 LinearLayoutManager.VERTICAL, false);
         layoutManager.setInitialPrefetchItemCount(donHang.getItem().size());
@@ -47,18 +53,43 @@ public class DonHangAdapter extends RecyclerView.Adapter<DonHangAdapter.MyViewHo
         holder.reChitiet.setRecycledViewPool(viewPool);
     }
 
+    private String trangThaiDon(int status) {
+        String result;
+        switch (status) {
+            case 0:
+                result = "Đơn hàng đang được xử lý";
+                break;
+            case 1:
+                result = "Đơn hàng đã được nhận";
+                break;
+            case 2:
+                result = "Đơn hàng đã được giao cho đơn vị vận chuyển";
+                break;
+            case 3:
+                result = "Đơn hàng được giao thành công";
+                break;
+            case 4:
+                result = "Đơn hàng đã bị hủy";
+                break;
+            default:
+                result = "";
+        }
+        return result;
+    }
+
     @Override
     public int getItemCount() {
         return listdonhang.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView txtdonhang;
+        TextView txtdonhang, trangthai;
         RecyclerView reChitiet;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             txtdonhang = itemView.findViewById(R.id.iddonhang);
+            trangthai = itemView.findViewById(R.id.tinhtrang);
             reChitiet = itemView.findViewById(R.id.recycleview_chitiet);
         }
     }
