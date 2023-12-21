@@ -122,7 +122,7 @@ public class ThanhToanActivity extends AppCompatActivity {
 
     private void pushNotiToUser() {
         // get token
-        compositeDisposable.add(apiBanThuoc.getToken(1)
+        compositeDisposable.add(apiBanThuoc.getToken(1, 0)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -132,7 +132,7 @@ public class ThanhToanActivity extends AppCompatActivity {
                                     // String token = "d7vwNtziTIizvflDwGPxl4:APA91bE-rMNwaN3wjsntRE_UgOC9xiqsks5z2h_fi_Up7A7UYShMUuQNhuzGhlzgtD1M0RZSz0aR6r-Z93YHOCwVwN7ggiVgRq3aFCJPUQSZi6KxAPEm0pJzOxpdtJPrN5sdmBfsz6Gc";
                                     Map<String, String> data = new HashMap<>();
                                     data.put("title", "Thông báo");
-                                    data.put("body", "Bạn có đơn hàng mới");
+                                    data.put("body", "Bạn có đơn hàng mới từ " + Utils.user_current.getUsername());
                                     NotiSendData notiSendData = new NotiSendData(userModel.getResult().get(i).getToken(), data);
                                     ApiPushNotification apiPushNotification = RetrofitClientNoti.getInstance().create(ApiPushNotification.class);
                                     compositeDisposable.add(apiPushNotification.sendNotification(notiSendData)

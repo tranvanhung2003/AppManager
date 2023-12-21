@@ -195,6 +195,9 @@ public class MainActivity extends AppCompatActivity {
                         loaiSpModel -> {
                             if (loaiSpModel.isSuccess()) {
                                 mangloaisp = loaiSpModel.getResult();
+                                if (Utils.user_current.getStatus() == 1) {
+                                    mangloaisp.add(new LoaiSp("Quản lý", "https://cdn-icons-png.flaticon.com/512/6403/6403525.png"));
+                                }
                                 loaiSpAdapter = new LoaiSpAdapter(getApplicationContext(), mangloaisp);
                                 listViewManHinhChinh.setAdapter(loaiSpAdapter);
                             }

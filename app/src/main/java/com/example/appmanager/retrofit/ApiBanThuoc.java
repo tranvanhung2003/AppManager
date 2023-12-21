@@ -108,6 +108,13 @@ public interface ApiBanThuoc {
             @Field("token") String token
     );
 
+    @POST("updateorder.php")
+    @FormUrlEncoded
+    Observable<MessageModel> updateOrder(
+            @Field("id") int id,
+            @Field("trangthai") int trangthai
+    );
+
     @Multipart
     @POST("upload.php")
     Call<MessageModel> uploadFile(@Part MultipartBody.Part file);
@@ -121,6 +128,7 @@ public interface ApiBanThuoc {
     @POST("gettoken.php")
     @FormUrlEncoded
     Observable<UserModel> getToken(
-            @Field("status") int status
+            @Field("status") int status,
+            @Field("iduser") int iduser
     );
 }
